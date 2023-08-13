@@ -11,7 +11,7 @@
 
 	<groupId>com.diariodeumdev</groupId>
 	<artifactId>apiclient-spring-boot-boilerplate</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>apiclient-spring-boot-boilerplate</name>
 	<description>API Client Spring Boot Boilerplate is inital kit. This project includes : Spring Boot(v3.1.2), Spring Data JPA, Spring Validation, Spring Security + JWT Token, H2, Lombok, Swagger (Open API), JUnit5</description>
 
@@ -42,15 +42,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>2.1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

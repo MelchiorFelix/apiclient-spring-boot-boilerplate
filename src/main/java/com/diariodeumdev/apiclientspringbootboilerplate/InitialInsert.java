@@ -6,6 +6,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Configuration
 public class InitialInsert {
 
@@ -18,8 +21,14 @@ public class InitialInsert {
     @Bean
     public CommandLineRunner init(){
         return args -> {
-            if(_clientRepository.count() == 0)
-                _clientRepository.save(new Client(1l,"John Doe"));
+            if (_clientRepository.count() == 0) {
+                List<Client> clientsToInsert = Arrays.asList(
+                        new Client(1L, "John Doe"),
+                        new Client(2L, "Jane Doe")
+                );
+
+                _clientRepository.saveAll(clientsToInsert);
+            }
         };
     }
 }
