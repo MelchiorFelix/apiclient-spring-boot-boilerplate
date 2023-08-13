@@ -1,7 +1,8 @@
 # API Client Spring Boot Boilerplate
  *API Client Spring Boot Boilerplate* is spring boot base project.
 
-## Technologies 
+## Application Tech Stack 
+- Java 17
 - Spring Boot (v3.1.2)
 - Spring Data JPA
 - Spring Validation
@@ -9,23 +10,37 @@
 - H2Database
 - Lombok
 - Swagger (Open API)
-- JUnit5
+- JUnit5 + Mockito
   
 ## Run the Application
 
- If you're using Docker, you can use ```docker compose up -d``` command. (If you have made changes in local, you should use the *local-docker-compose* file.)
-
 Navigate to the root of the project. For building the project using command line, run below command :
 
-``` mvn clean install```
+``` mvn clean package ```
 
 Run service in command line. Navigate to *target* directory. 
 
 ``` java -jar apiclient-spring-boot-boilerplate.jar ```
 
-## Postman Collection
+## Docker build and run
 
-- [You can access the Postman collection here and you can try it after you get the project up and running.](--link--)
+`docker build --tag=apiclient-spring-boot-boilerplate:1.0 .`
+
+`docker run -p 8080:8080 apiclient-spring-boot-boilerplate:1.0 .`
+
+## API Doc
+
+Api Doc(Swagger) will be served on following path;
+
+http://localhost:8080/swagger
+
+## Initial Data Load to Tables
+
+Following data added to InitialInsert file under java folder. These data is added initially when the application run.
+
+`INSERT INTO client (id, name) VALUES (1, 'John Doe');`
+
+`INSERT INTO client (id, name) VALUES (2, 'Jane Doe');`
 
 ### License
 
