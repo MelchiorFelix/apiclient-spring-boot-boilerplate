@@ -1,7 +1,10 @@
 package com.diariodeumdev.apiclientspringbootboilerplate.controller;
 
+import com.diariodeumdev.apiclientspringbootboilerplate.dto.ClientRecordDto;
 import com.diariodeumdev.apiclientspringbootboilerplate.model.Client;
 import com.diariodeumdev.apiclientspringbootboilerplate.service.ClientService;
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +24,9 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> insertClient(@RequestBody Client client){
+    public ResponseEntity<Client> insertClient(@Valid @RequestBody ClientRecordDto clientRecordDto){
+        var client = new Client();
+        BeanUtils.copyProperties(clientRecordDto, client);
         return _clientService.save(client);
     }
 
@@ -31,7 +36,7 @@ public class ClientController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody Client client){
+    public ResponseEntity<Client> updateClient(@PathVariable Long id, @Valid @RequestBody Client client){
         return _clientService.updateClient(id, client);
     }
 

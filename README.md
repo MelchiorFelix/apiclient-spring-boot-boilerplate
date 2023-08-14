@@ -42,6 +42,6 @@ Following data added to InitialInsert file under java folder. These data is adde
 
 `INSERT INTO client (id, name) VALUES (2, 'Jane Doe');`
 
-### License
+## License
 
 Apache License 2.0

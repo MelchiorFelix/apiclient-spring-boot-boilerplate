@@ -1,12 +1,15 @@
 package com.diariodeumdev.apiclientspringbootboilerplate.controller;
 
+import com.diariodeumdev.apiclientspringbootboilerplate.dto.ClientRecordDto;
 import com.diariodeumdev.apiclientspringbootboilerplate.model.Client;
 import com.diariodeumdev.apiclientspringbootboilerplate.service.ClientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -26,8 +29,10 @@ class ClientControllerTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-        clientController = new ClientController(clientService);
+        try (MockedStatic<Mockito> mockedStatic = Mockito.mockStatic(Mockito.class)) {
+            mockedStatic.when(Mockito::mock).thenReturn(clientService);
+            clientController = new ClientController(clientService);
+        }
     }
 
     @Test
@@ -45,10 +50,12 @@ class ClientControllerTest {
 
     @Test
     void insertClient_ValidClient_ReturnsCreatedClient() {
+        ClientRecordDto clientRecordDto = new ClientRecordDto("John Doe");
         Client client = new Client();
+        BeanUtils.copyProperties(clientRecordDto, client);
         when(clientService.save(client)).thenReturn(ResponseEntity.status(HttpStatus.CREATED).body(client));
 
-        ResponseEntity<Client> response = clientController.insertClient(client);
+        ResponseEntity<Client> response = clientController.insertClient(clientRecordDto);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertNotNull(response.getBody());
