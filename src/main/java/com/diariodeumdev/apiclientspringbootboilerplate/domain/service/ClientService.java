@@ -1,6 +1,6 @@
-package com.diariodeumdev.apiclientspringbootboilerplate.service;
+package com.diariodeumdev.apiclientspringbootboilerplate.domain.service;
 
-import com.diariodeumdev.apiclientspringbootboilerplate.model.Client;
+import com.diariodeumdev.apiclientspringbootboilerplate.domain.model.Client;
 import org.springframework.http.ResponseEntity;
 
 public interface ClientService {

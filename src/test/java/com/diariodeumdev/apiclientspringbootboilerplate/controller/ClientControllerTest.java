@@ -1,8 +1,9 @@
 package com.diariodeumdev.apiclientspringbootboilerplate.controller;
 
-import com.diariodeumdev.apiclientspringbootboilerplate.dto.ClientRecordDto;
-import com.diariodeumdev.apiclientspringbootboilerplate.model.Client;
-import com.diariodeumdev.apiclientspringbootboilerplate.service.ClientService;
+import com.diariodeumdev.apiclientspringbootboilerplate.application.controller.ClientController;
+import com.diariodeumdev.apiclientspringbootboilerplate.application.dto.request.ClientRequest;
+import com.diariodeumdev.apiclientspringbootboilerplate.domain.model.Client;
+import com.diariodeumdev.apiclientspringbootboilerplate.domain.service.ClientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,12 +51,12 @@ class ClientControllerTest {
 
     @Test
     void insertClient_ValidClient_ReturnsCreatedClient() {
-        ClientRecordDto clientRecordDto = new ClientRecordDto("John Doe");
+        ClientRequest clientRequest = new ClientRequest("John Doe");
         Client client = new Client();
-        BeanUtils.copyProperties(clientRecordDto, client);
+        BeanUtils.copyProperties(clientRequest, client);
         when(clientService.save(client)).thenReturn(ResponseEntity.status(HttpStatus.CREATED).body(client));
 
-        ResponseEntity<Client> response = clientController.insertClient(clientRecordDto);
+        ResponseEntity<Client> response = clientController.insertClient(clientRequest);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertNotNull(response.getBody());

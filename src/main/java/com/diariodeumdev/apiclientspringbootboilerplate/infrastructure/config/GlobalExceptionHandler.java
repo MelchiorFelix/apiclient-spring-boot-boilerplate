@@ -1,4 +1,4 @@
-package com.diariodeumdev.apiclientspringbootboilerplate.configuration;
+package com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.config;
 
 import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;

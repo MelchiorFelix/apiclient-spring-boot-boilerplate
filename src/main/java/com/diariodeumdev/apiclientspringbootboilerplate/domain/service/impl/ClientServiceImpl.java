@@ -1,8 +1,8 @@
-package com.diariodeumdev.apiclientspringbootboilerplate.service.impl;
+package com.diariodeumdev.apiclientspringbootboilerplate.domain.service.impl;
 
-import com.diariodeumdev.apiclientspringbootboilerplate.model.Client;
-import com.diariodeumdev.apiclientspringbootboilerplate.repository.ClientRepository;
-import com.diariodeumdev.apiclientspringbootboilerplate.service.ClientService;
+import com.diariodeumdev.apiclientspringbootboilerplate.domain.model.Client;
+import com.diariodeumdev.apiclientspringbootboilerplate.domain.repository.ClientRepository;
+import com.diariodeumdev.apiclientspringbootboilerplate.domain.service.ClientService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;

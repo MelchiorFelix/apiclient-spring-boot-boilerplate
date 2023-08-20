@@ -1,8 +1,9 @@
-package com.diariodeumdev.apiclientspringbootboilerplate.controller;
+package com.diariodeumdev.apiclientspringbootboilerplate.application.controller;
 
-import com.diariodeumdev.apiclientspringbootboilerplate.dto.ClientRecordDto;
-import com.diariodeumdev.apiclientspringbootboilerplate.model.Client;
-import com.diariodeumdev.apiclientspringbootboilerplate.service.ClientService;
+import com.diariodeumdev.apiclientspringbootboilerplate.application.dto.request.ClientRequest;
+import com.diariodeumdev.apiclientspringbootboilerplate.domain.model.Client;
+import com.diariodeumdev.apiclientspringbootboilerplate.domain.service.ClientService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/clients")
+@SecurityRequirement(name = "bearerAuth")
 public class ClientController {
 
     private final ClientService _clientService;
@@ -24,9 +26,9 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> insertClient(@Valid @RequestBody ClientRecordDto clientRecordDto){
+    public ResponseEntity<Client> insertClient(@Valid @RequestBody ClientRequest clientRequest){
         var client = new Client();
-        BeanUtils.copyProperties(clientRecordDto, client);
+        BeanUtils.copyProperties(clientRequest, client);
         return _clientService.save(client);
     }
 

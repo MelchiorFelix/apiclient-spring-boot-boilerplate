@@ -1,7 +1,7 @@
 package com.diariodeumdev.apiclientspringbootboilerplate;
 
-import com.diariodeumdev.apiclientspringbootboilerplate.model.Client;
-import com.diariodeumdev.apiclientspringbootboilerplate.repository.ClientRepository;
+import com.diariodeumdev.apiclientspringbootboilerplate.domain.model.Client;
+import com.diariodeumdev.apiclientspringbootboilerplate.domain.repository.ClientRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

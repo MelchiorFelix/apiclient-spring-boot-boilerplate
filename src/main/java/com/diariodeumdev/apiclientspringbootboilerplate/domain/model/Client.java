@@ -1,4 +1,4 @@
-package com.diariodeumdev.apiclientspringbootboilerplate.model;
+package com.diariodeumdev.apiclientspringbootboilerplate.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,11 +6,12 @@ import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 
+@Table(name = "clients")
+@Entity(name = "clients")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class Client implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
