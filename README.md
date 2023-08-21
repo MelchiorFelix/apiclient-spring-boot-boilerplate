@@ -1,3 +1,6 @@
+<!-- README.md -->
++ [![cov](https://MelchiorFelix.github.io/apiclient-spring-boot-boilerplate/badges/coverage.svg)](https://github.com/MelchiorFelix/apiclient-spring-boot-boilerplate/actions)
+
 # API Client Spring Boot Boilerplate
  *API Client Spring Boot Boilerplate* is spring boot base project.
 
