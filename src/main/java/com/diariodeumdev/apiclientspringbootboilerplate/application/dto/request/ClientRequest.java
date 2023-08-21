@@ -1,7 +1,8 @@
 package com.diariodeumdev.apiclientspringbootboilerplate.application.dto.request;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Valid
 public record ClientRequest(

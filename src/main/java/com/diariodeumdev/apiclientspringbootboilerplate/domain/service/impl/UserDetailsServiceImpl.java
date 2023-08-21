@@ -1,6 +1,7 @@
 package com.diariodeumdev.apiclientspringbootboilerplate.domain.service.impl;
 
 import com.diariodeumdev.apiclientspringbootboilerplate.application.dto.request.AuthenticationRequest;
+import com.diariodeumdev.apiclientspringbootboilerplate.application.dto.response.ErrorResponse;
 import com.diariodeumdev.apiclientspringbootboilerplate.application.dto.response.TokenResponse;
 import com.diariodeumdev.apiclientspringbootboilerplate.domain.model.User;
 import com.diariodeumdev.apiclientspringbootboilerplate.domain.model.UserRole;
@@ -17,8 +18,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import static com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.utils.Constants.USER_EXISTS;
+import static com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.utils.Constants.USER_IN_DATABASE;
+
 @Service
-public class AuthorizationServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -29,12 +33,17 @@ public class AuthorizationServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByLogin(username);
+        return userRepository.findByLogin(username).orElseThrow();
     }
 
     @Transactional
     public ResponseEntity register(AuthenticationRequest request) {
-        if(this.userRepository.findByLogin(request.login()) != null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        if(!this.userRepository.findByLogin(request.login()).isEmpty()) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(new ErrorResponse(USER_EXISTS, USER_IN_DATABASE, 409));
+
+        }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(request.password());
         this.userRepository.save(new User(request.login(),encryptedPassword, UserRole.USER));
@@ -42,12 +51,13 @@ public class AuthorizationServiceImpl implements UserDetailsService {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    public ResponseEntity login(AuthenticationRequest request) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(request.login(), request.password());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
-
-        var token = this.tokenService.generateToken((User)auth.getPrincipal());
-
-        return ResponseEntity.ok(new TokenResponse(token));
+    public ResponseEntity authenticate(AuthenticationRequest request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.login(),
+                        request.password()));
+        var user = userRepository.findByLogin(request.login()).orElseThrow();
+        var jwtToken = tokenService.generateToken((User)user);
+        return ResponseEntity.ok(new TokenResponse(jwtToken));
     }
 }

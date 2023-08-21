@@ -1,7 +1,6 @@
 package com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.config;
 
 import com.diariodeumdev.apiclientspringbootboilerplate.domain.repository.UserRepository;
-import com.diariodeumdev.apiclientspringbootboilerplate.domain.service.impl.AuthorizationServiceImpl;
 import com.diariodeumdev.apiclientspringbootboilerplate.domain.service.impl.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -31,7 +29,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         if(token != null){
             var login = tokenService.validateToken(token);
-            UserDetails user = userRepository.findByLogin(login);
+            UserDetails user = userRepository.findByLogin(login).orElseThrow();
 
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -1,4 +1,4 @@
-package com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.config;
+package com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.utils;
 
 public final class Constants {
     public static final String[] AUTH_WHITELIST = {
@@ -28,12 +28,12 @@ public final class Constants {
             "/health/**",
             "/swagger"
     };
-
     public static final String H2_CONSOLE = "/h2-console";
-
     public static final String[] AUTH_LOGIN = {
             // Auth
             "/api/auth/register",
            "/api/auth/login"
     };
+    public static final String USER_EXISTS = "User already exists";
+    public static final String USER_IN_DATABASE = "The requested operation cannot be completed because a user with the provided information already exists in the database.";
 }
