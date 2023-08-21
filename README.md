@@ -1,5 +1,3 @@
-[![codecov](https://codecov.io/gh/bjack205/JuliaTemplateRepo.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/bjack205/JuliaTemplateRepo.jl)
-
 # API Client Spring Boot Boilerplate
  *API Client Spring Boot Boilerplate* is spring boot base project.
 
@@ -9,6 +7,10 @@
 - Spring Data JPA
 - H2Database
 - FlyWay
+
+## Test Coverage
+![Coverage](.github/badges/jacoco.svg)
+![Branches](.github/badges/branches.svg)
   
 ## Run the Application
 
