@@ -36,4 +36,12 @@ public final class Constants {
     };
     public static final String USER_EXISTS = "User already exists";
     public static final String USER_IN_DATABASE = "The requested operation cannot be completed because a user with the provided information already exists in the database.";
+    public static final String UNAUTHORIZED = "Unauthorized";
+    public static final String ACCOUNT_NOT_FOUND = "The account you are trying to access does not exist in our records. Please double-check the information you entered or consider signing up if you are a new user.";
+    public static final String CLIENT_NOT_FOUND = "Client not found";
+    public static final String CLIENT_NOT_FOUND_MESSAGE = "The client you are looking for was not found.";
+    public static final String TOKEN_USER_NOT_FOUND_MESSAGE = "The token you provided is associated with a user that does not exist.";
+
+
+
 }

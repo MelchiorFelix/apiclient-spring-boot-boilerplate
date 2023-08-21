@@ -89,7 +89,7 @@ class ClientControllerTest {
 
     @Test
     void find_ValidFilter_ReturnsClients() {
-        Client filter = new Client();
+        ClientRequest filter = new ClientRequest("FilterName");
         when(clientService.find(filter)).thenReturn(ResponseEntity.ok("List of clients"));
 
         var response = clientController.find(filter);

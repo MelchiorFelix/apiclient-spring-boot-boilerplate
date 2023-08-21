@@ -43,7 +43,7 @@ public class ClientController {
     }
 
     @GetMapping
-    public ResponseEntity find(Client filter){
+    public ResponseEntity find(ClientRequest filter){
         return _clientService.find(filter);
     }
 }

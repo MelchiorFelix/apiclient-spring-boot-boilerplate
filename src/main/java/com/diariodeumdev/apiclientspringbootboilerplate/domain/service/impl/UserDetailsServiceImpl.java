@@ -12,24 +12,31 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.utils.Constants.USER_EXISTS;
-import static com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.utils.Constants.USER_IN_DATABASE;
+import static com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.utils.Constants.*;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    private final UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
+
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private TokenService tokenService;
+    public UserDetailsServiceImpl(
+            UserRepository userRepository,
+            AuthenticationManager authenticationManager,
+            TokenService tokenService) {
+        this.userRepository = userRepository;
+        this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -41,7 +48,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(!this.userRepository.findByLogin(request.login()).isEmpty()) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(new ErrorResponse(USER_EXISTS, USER_IN_DATABASE, 409));
+                    .body(new ErrorResponse(USER_EXISTS, USER_IN_DATABASE, HttpStatus.CONFLICT.value()));
 
         }
 
@@ -52,12 +59,28 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public ResponseEntity authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.login(),
-                        request.password()));
-        var user = userRepository.findByLogin(request.login()).orElseThrow();
-        var jwtToken = tokenService.generateToken((User)user);
-        return ResponseEntity.ok(new TokenResponse(jwtToken));
+        try {
+            var userOptional = userRepository.findByLogin(request.login());
+
+            if (userOptional.isPresent()) {
+                UserDetails userDetails = userOptional.get();
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                request.login(),
+                                request.password()));
+                var jwtToken = tokenService.generateToken((User) userDetails);
+                return ResponseEntity.ok(new TokenResponse(jwtToken));
+            } else {
+                return unauthorizedResponse();
+            }
+        } catch (AuthenticationException authenticationException) {
+            return unauthorizedResponse();
+        }
+    }
+
+    private ResponseEntity unauthorizedResponse() {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(new ErrorResponse(UNAUTHORIZED, ACCOUNT_NOT_FOUND, HttpStatus.UNAUTHORIZED.value()));
     }
 }
