@@ -34,14 +34,6 @@ Api Doc(Swagger) will be served on following path;
 
 http://localhost:8080/swagger
 
-## Initial Data Load to Tables
-
-Following data added to InitialInsert file under java folder. These data is added initially when the application run.
-
-`INSERT INTO client (id, name) VALUES (1, 'John Doe');`
-
-`INSERT INTO client (id, name) VALUES (2, 'Jane Doe');`
-
 ## License
 
 Apache License 2.0
