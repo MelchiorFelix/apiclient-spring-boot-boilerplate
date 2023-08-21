@@ -11,10 +11,6 @@
 - Lombok
 - Swagger (Open API)
 - JUnit5 + Mockito
-
-## Test Coverage
-![Coverage](.github/badges/jacoco.svg)
-![Branches](.github/badges/branches.svg)
   
 ## Run the Application
 
