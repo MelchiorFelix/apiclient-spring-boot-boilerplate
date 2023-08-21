@@ -13,5 +13,5 @@ public interface ClientService {
 
     ResponseEntity<Client> getClientById(Long id);
 
-    ResponseEntity<Client> save(Client client);
+    ResponseEntity<Client> save(ClientRequest client);
 }

@@ -32,7 +32,6 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/clients").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, Constants.AUTH_LOGIN).permitAll()
                         .requestMatchers(Constants.AUTH_WHITELIST).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher(Constants.H2_CONSOLE + "/**")).permitAll()

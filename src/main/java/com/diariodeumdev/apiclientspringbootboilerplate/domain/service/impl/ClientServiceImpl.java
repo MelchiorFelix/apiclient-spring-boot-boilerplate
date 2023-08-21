@@ -6,6 +6,7 @@ import com.diariodeumdev.apiclientspringbootboilerplate.domain.model.Client;
 import com.diariodeumdev.apiclientspringbootboilerplate.domain.repository.ClientRepository;
 import com.diariodeumdev.apiclientspringbootboilerplate.domain.service.ClientService;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Transactional
-    public ResponseEntity<Client> save(Client client) {
+    public ResponseEntity<Client> save(ClientRequest clientRequest) {
+        var client = new Client();
+        BeanUtils.copyProperties(clientRequest, client);
         return ResponseEntity.status(HttpStatus.CREATED).body(_clientRepository.save(client));
     }
 

@@ -5,7 +5,6 @@ import com.diariodeumdev.apiclientspringbootboilerplate.domain.model.Client;
 import com.diariodeumdev.apiclientspringbootboilerplate.domain.service.ClientService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,9 +26,7 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<Client> insertClient(@Valid @RequestBody ClientRequest clientRequest){
-        var client = new Client();
-        BeanUtils.copyProperties(clientRequest, client);
-        return _clientService.save(client);
+        return _clientService.save(clientRequest);
     }
 
     @DeleteMapping(value = "{id}")

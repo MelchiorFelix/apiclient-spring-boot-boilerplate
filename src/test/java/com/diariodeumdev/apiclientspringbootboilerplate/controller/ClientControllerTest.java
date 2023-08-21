@@ -54,7 +54,7 @@ class ClientControllerTest {
         ClientRequest clientRequest = new ClientRequest("John Doe");
         Client client = new Client();
         BeanUtils.copyProperties(clientRequest, client);
-        when(clientService.save(client)).thenReturn(ResponseEntity.status(HttpStatus.CREATED).body(client));
+        when(clientService.save(clientRequest)).thenReturn(ResponseEntity.status(HttpStatus.CREATED).body(client));
 
         ResponseEntity<Client> response = clientController.insertClient(clientRequest);
 
