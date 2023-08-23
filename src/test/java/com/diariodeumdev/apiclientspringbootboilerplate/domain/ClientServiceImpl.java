@@ -8,8 +8,6 @@ import com.diariodeumdev.apiclientspringbootboilerplate.domain.service.impl.Clie
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -31,10 +29,8 @@ class ClientServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        try (MockedStatic<MockitoAnnotations> mockedStatic = Mockito.mockStatic(MockitoAnnotations.class)) {
-            mockedStatic.when(MockitoAnnotations::openMocks).thenReturn(this);
-            clientService = new ClientServiceImpl(clientRepository);
-        }
+        MockitoAnnotations.openMocks(this);
+        clientService = new ClientServiceImpl(clientRepository);
     }
 
     @Test
