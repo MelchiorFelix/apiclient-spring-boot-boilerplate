@@ -13,6 +13,7 @@
 - FlyWay
 - Spring Validation
 - Lombok
+- JUnit5 + Mockito
 
 ## Test Coverage
 
