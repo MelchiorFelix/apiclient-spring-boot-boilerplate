@@ -5,14 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientRequest {
-
+public class AuthenticationRequest {
     @NotEmpty
-    @Size(min = 3, max = 100)
-    private String name;
+    private String login;
+    @NotEmpty
+    private String password;
 }

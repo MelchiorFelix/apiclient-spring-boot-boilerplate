@@ -14,6 +14,7 @@
 - Spring Validation
 - Lombok
 - JUnit5 + Mockito
+- Spring Security + JWT Token
 
 ## Test Coverage
 
