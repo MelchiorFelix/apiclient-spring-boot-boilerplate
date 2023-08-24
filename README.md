@@ -11,6 +11,8 @@
 - Spring Data JPA
 - H2Database
 - FlyWay
+- Spring Validation
+- Lombok
 
 ## Test Coverage
 
