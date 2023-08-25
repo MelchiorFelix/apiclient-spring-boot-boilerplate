@@ -1,9 +1,8 @@
-package com.diariodeumdev.apiclientspringbootboilerplate.domain;
+package com.diariodeumdev.apiclientspringbootboilerplate.domain.service.impl;
 
 import com.diariodeumdev.apiclientspringbootboilerplate.application.dto.request.ClientRequest;
 import com.diariodeumdev.apiclientspringbootboilerplate.domain.model.Client;
 import com.diariodeumdev.apiclientspringbootboilerplate.domain.repository.ClientRepository;
-import com.diariodeumdev.apiclientspringbootboilerplate.domain.service.impl.ClientServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -26,10 +25,13 @@ class ClientServiceImplTest {
 
     private ClientServiceImpl clientService;
 
+    @Mock
+    private ServiceUtilsImpl serviceUtils;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        clientService = new ClientServiceImpl(clientRepository);
+        clientService = new ClientServiceImpl(clientRepository, serviceUtils);
     }
 
     @Test
@@ -65,6 +67,7 @@ class ClientServiceImplTest {
         // Given
         Long clientId = 1L;
         when(clientRepository.findById(clientId)).thenReturn(Optional.empty());
+        when(serviceUtils.notFoundResponse()).thenReturn(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 
         // When
         ResponseEntity<Void> response = clientService.deleteClientById(clientId);
@@ -72,8 +75,6 @@ class ClientServiceImplTest {
         // Then
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
-
-    // ... Other tests follow the same pattern ...
 
     @Test
     void givenValidFilter_whenFindingClients_thenReturnsOkResponse() {
@@ -103,4 +104,65 @@ class ClientServiceImplTest {
         assertNotNull(response.getBody());
         assertTrue(response.getBody().isEmpty());
     }
+
+    @Test
+    void givenExistingClientIdAndValidClient_whenUpdatingClient_thenReturnsOkResponse() {
+        // Given
+        Long clientId = 1L;
+        Client updatedClient = new Client("Updated Client");
+        when(clientRepository.existsById(clientId)).thenReturn(true);
+        when(clientRepository.save(updatedClient)).thenReturn(updatedClient);
+
+        // When
+        ResponseEntity<Client> response = clientService.updateClient(clientId, updatedClient);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(updatedClient, response.getBody());
+    }
+
+    @Test
+    void givenNonExistingClientIdAndValidClient_whenUpdatingClient_thenReturnsNotFoundResponse() {
+        // Given
+        Long clientId = 1L;
+        Client updatedClient = new Client("Updated Client");
+        when(clientRepository.existsById(clientId)).thenReturn(false);
+        when(serviceUtils.notFoundResponse()).thenReturn(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+
+        // When
+        ResponseEntity<Client> response = clientService.updateClient(clientId, updatedClient);
+
+        // Then
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void givenExistingClientId_whenGettingClientById_thenReturnsOkResponse() {
+        // Given
+        Long clientId = 1L;
+        Client existingClient = new Client("Existing Client");
+        when(clientRepository.findById(clientId)).thenReturn(Optional.of(existingClient));
+
+        // When
+        ResponseEntity<Client> response = clientService.getClientById(clientId);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(existingClient, response.getBody());
+    }
+
+    @Test
+    void givenNonExistingClientId_whenGettingClientById_thenReturnsNotFoundResponse() {
+        // Given
+        Long clientId = 1L;
+        when(clientRepository.findById(clientId)).thenReturn(Optional.empty());
+        when(serviceUtils.notFoundResponse()).thenReturn(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+
+        // When
+        ResponseEntity<Client> response = clientService.getClientById(clientId);
+
+        // Then
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
 }

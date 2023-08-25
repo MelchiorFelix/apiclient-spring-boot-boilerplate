@@ -1,17 +1,20 @@
 package com.diariodeumdev.apiclientspringbootboilerplate.application.config;
 
 import com.diariodeumdev.apiclientspringbootboilerplate.application.dto.response.ErrorResponse;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.validation.FieldError;
 
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.utils.Constants.ACESS_DENIED;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -48,5 +51,15 @@ public class GlobalExceptionHandler {
                 Collections.singletonList(ex.getMessage())
         );
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException() {
+        ErrorResponse response = new ErrorResponse(
+                new Timestamp(System.currentTimeMillis()),
+                HttpStatus.FORBIDDEN.value(),
+                Collections.singletonList(ACESS_DENIED)
+        );
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 }
