@@ -1,15 +1,15 @@
 package com.diariodeumdev.apiclientspringbootboilerplate.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -17,9 +17,9 @@ import java.util.UUID;
 @Table(name = "users")
 @Entity(name = "users")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
 public class User implements UserDetails {
 
     @Id
