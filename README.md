@@ -15,6 +15,7 @@
 - Lombok
 - JUnit5 + Mockito
 - Spring Security + JWT Token
+- Swagger (Open API)
 
 ## Test Coverage
 

@@ -34,6 +34,7 @@ public final class Constants {
     };
     public static final String UPDATE_USERS = "/api/users/update-user";
     public static final String ROLE_ADMIN = "hasRole('ADMIN')";
+    public static final String SECURITY_SCHEME = "bearerAuth";
     public static final String ACESS_DENIED = "Access denied. You do not have permission to perform this action.";
     public static final String USER_IN_DATABASE = "The requested operation cannot be completed because a user with the provided information already exists in the database.";
     public static final String ACCOUNT_NOT_FOUND = "The account you are trying to access does not exist in our records. Please double-check the information you entered or consider signing up if you are a new user.";
