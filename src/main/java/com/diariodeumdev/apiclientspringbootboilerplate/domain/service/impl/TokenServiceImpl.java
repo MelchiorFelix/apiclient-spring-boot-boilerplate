@@ -5,6 +5,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.diariodeumdev.apiclientspringbootboilerplate.domain.model.User;
+import com.diariodeumdev.apiclientspringbootboilerplate.domain.service.TokenService;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 @Service
-public class TokenService {
+@Generated
+public class TokenServiceImpl implements TokenService {
 
     @Value("${api.security.token.secret}")
     private String secret;

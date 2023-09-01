@@ -26,13 +26,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
-    private final TokenService tokenService;
+    private final TokenServiceImpl tokenService;
 
     @Autowired
     public UserDetailsServiceImpl(
             UserRepository userRepository,
             AuthenticationManager authenticationManager,
-            TokenService tokenService) {
+            TokenServiceImpl tokenService) {
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;

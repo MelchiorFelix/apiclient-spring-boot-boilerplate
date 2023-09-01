@@ -15,7 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.utils.Constants.*;
+import static com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.utils.Constants.CLIENT_NOT_FOUND;
+import static com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.utils.Constants.CLIENT_NOT_FOUND_MESSAGE;
 
 @Service
 public class ClientServiceImpl implements ClientService {

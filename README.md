@@ -11,6 +11,7 @@
 - Lombok
 - Swagger (Open API)
 - JUnit5 + Mockito
+- FlyWay
 
 ## Test Coverage
 ![Coverage](.github/badges/jacoco.svg)

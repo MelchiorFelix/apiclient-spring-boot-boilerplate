@@ -6,21 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 @Table(name = "clients")
 @Entity(name = "clients")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Client implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
+public class Client {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
