@@ -2,7 +2,7 @@ package com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.config;
 
 import com.diariodeumdev.apiclientspringbootboilerplate.application.dto.response.ErrorResponse;
 import com.diariodeumdev.apiclientspringbootboilerplate.domain.repository.UserRepository;
-import com.diariodeumdev.apiclientspringbootboilerplate.domain.service.impl.TokenService;
+import com.diariodeumdev.apiclientspringbootboilerplate.domain.service.impl.TokenServiceImpl;
 import com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.utils.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
@@ -21,13 +21,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.NoSuchElementException;
 
-import static com.diariodeumdev.apiclientspringbootboilerplate.infrastructure.utils.Constants.TOKEN_USER_NOT_FOUND_MESSAGE;
-
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
-    private TokenService tokenService;
+    private TokenServiceImpl tokenService;
 
     @Autowired
     private UserRepository userRepository;
